@@ -1,4 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:/Users/zaheer/Desktop/Learning/these_many_trianles/media/videos/triangles/2160p60/partial_movie_files/SquareToCircle/3215718966_2855632916_1793580042.mp4'
-file 'file:/Users/zaheer/Desktop/Learning/these_many_trianles/media/videos/triangles/2160p60/partial_movie_files/SquareToCircle/1370976784_222290472_1793580042.mp4'
-file 'file:/Users/zaheer/Desktop/Learning/these_many_trianles/media/videos/triangles/2160p60/partial_movie_files/SquareToCircle/1370976784_3021192394_1793580042.mp4'
