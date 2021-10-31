@@ -49,6 +49,67 @@ class TheseManyTriangles(Scene):
         self.transform_num.to_corner(UP + LEFT)
         self.play(Transform(self.welcom, self.transform_num))
     
+    def render_increment_triangle_counter(self):
+        new_text = None
+        if self.total_triangles == 1:
+            new_text = Text(f'{self.total_triangles} Triangle',
+                            gradient=(BLUE, GREEN))
+        else:
+            new_text = Text(
+                f'{self.total_triangles} Triangles', gradient=(BLUE, GREEN))
+
+        new_text.move_to(self.transform_num, UL)
+        return Transform(self.welcom, new_text)
+
+    def could_it_be_triangle(self, dots: List[Dot]) -> bool:
+        dot1, dot2, dot3 = dots
+        triangle_area = (
+            dot1.get_x() * (dot2.get_y() - dot3.get_y()) +
+            dot2.get_x() * (dot3.get_y() - dot1.get_y()) +
+            dot3.get_x() * (dot1.get_y() - dot2.get_y()))
+
+        return triangle_area != 0
+
+    def find_points_in_line_dots_correspondence(self, point_1: Dot, point_2: Dot) -> bool:
+        for correspondence in self.line_dots_correspondence:
+            if correspondence == [point_1, point_2] or correspondence == [point_2, point_1]:
+                return True
+        return False
+
+    def is_it_triangle_on_figure(self, trianlge_points: List[Dot]) -> bool:
+        zeroth_point, first_point, second_point = trianlge_points
+
+        is_correspondence = self.find_points_in_line_dots_correspondence(
+            zeroth_point, first_point)
+        if not is_correspondence:
+            return False
+
+        is_correspondence = self.find_points_in_line_dots_correspondence(
+            zeroth_point, second_point)
+        if not is_correspondence:
+            return False
+
+        is_correspondence = self.find_points_in_line_dots_correspondence(
+            first_point, second_point)
+        if not is_correspondence:
+            return False
+
+        return True
+
+    def mark_triangle_figure(self, triangle_points: List[Dot]) -> None:
+        zeroth_point, first_point, second_point = triangle_points
+        line_1 = Line(zeroth_point, first_point).set_stroke(width=9)
+        line_2 = Line(first_point, second_point).set_stroke(width=9)
+        line_3 = Line(second_point, zeroth_point).set_stroke(width=9)
+
+        self.add(line_1, line_2, line_3)
+        counter_transformer = self.render_increment_triangle_counter()
+
+        self.play(Indicate(line_1, color=TEAL), Indicate(line_2, color=TEAL),
+                  Indicate(line_3, color=TEAL), counter_transformer)
+        self.remove(line_1, line_2, line_3)
+
+
     def detect_triangles(self):
         total_trianlges = 0
         for i, trianlge_points in enumerate(combinations(self.dots, 3)):
