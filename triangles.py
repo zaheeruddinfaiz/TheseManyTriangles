@@ -18,6 +18,15 @@ class TheseManyTriangles(Scene):
         self.remove_base_figure()
         self.final_triangle_count()
         self.wait(3)
+    def remove_base_figure(self):
+        remove_animation = []
+        for dot in self.dots:
+            remove_animation.append(FadeOut(dot, shift=DOWN))
+
+        for line in self.lines:
+            remove_animation.append(FadeOut(line, shift=DOWN))
+        self.play(AnimationGroup(*remove_animation))
+
         
     def render_welcom(self):
         self.welcom = Text('These many TRIANGLES', gradient=(BLUE, GREEN))
