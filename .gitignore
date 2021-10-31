@@ -1,3 +1,4 @@
 .vscode/
 venv/
 media/
+*.mp3
