@@ -27,6 +27,20 @@ class TheseManyTriangles(Scene):
         self.transform_num.to_corner(UP + LEFT)
         self.play(Transform(self.welcom, self.transform_num))
     
+    def detect_triangles(self):
+        total_trianlges = 0
+        for i, trianlge_points in enumerate(combinations(self.dots, 3)):
+            it_could_be_trianlge = self.could_it_be_triangle(trianlge_points)
+            if it_could_be_trianlge:
+                is_trianlge_on_figure = self.is_it_triangle_on_figure(
+                    trianlge_points)
+                if is_trianlge_on_figure:
+                    self.total_triangles += 1
+                    self.mark_triangle_figure(trianlge_points)
+            else:
+                continue
+        print('Total trianlges', total_trianlges)
+
     def render_base_figure(self):
         start_x = 0
         start_y = 3
