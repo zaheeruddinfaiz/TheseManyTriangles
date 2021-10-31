@@ -1,3 +1,4 @@
+import os
 from itertools import combinations
 from typing import List
 
@@ -11,8 +12,9 @@ class TheseManyTriangles(Scene):
         self.lines: List[Line] = []
         self.line_dots_correspondence: List[Dot] = []
         self.total_triangles = 0
-        self.add_sound(sound_file="Vincent Rubinetti - Grant's Etude.mp3")
-        self.render_welcom()
+        if os.path.exists("Vincent Rubinetti - Grant's Etude.mp3"):
+            self.add_sound(sound_file="Vincent Rubinetti - Grant's Etude.mp3")
+        self.render_welcome()
         self.render_base_figure()
         self.detect_triangles()
         self.remove_base_figure()
@@ -41,9 +43,10 @@ class TheseManyTriangles(Scene):
         self.play(AnimationGroup(*remove_animation))
 
         
-    def render_welcom(self):
+    def render_welcome(self):
         self.welcom = Text('These many TRIANGLES', gradient=(BLUE, GREEN))
         self.play(Write(self.welcom))
+        self.wait(3)
 
         self.transform_num = Text('0 Triangles', gradient=(BLUE, GREEN))
         self.transform_num.to_corner(UP + LEFT)
@@ -122,7 +125,6 @@ class TheseManyTriangles(Scene):
                     self.mark_triangle_figure(trianlge_points)
             else:
                 continue
-        print('Total trianlges', total_trianlges)
 
     def render_base_figure(self):
         start_x = 0
@@ -194,7 +196,6 @@ class TheseManyTriangles(Scene):
                      one_third_dot, two_third_dot, mid_ver_left, mid_ver_right)
         self.dots = all_dots
         self.lines = all_lines
-        print(len(self.lines))
 
     def get_two_third(self, start: Dot, end: Dot) -> Dot:
         x = (2 * end.get_x()) / 3 + start.get_x()/3
