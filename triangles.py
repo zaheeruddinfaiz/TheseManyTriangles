@@ -18,6 +18,19 @@ class TheseManyTriangles(Scene):
         self.remove_base_figure()
         self.final_triangle_count()
         self.wait(3)
+    
+    def final_triangle_count(self):
+        new_text = None
+        if self.total_triangles == 1:
+            new_text = Text(f'{self.total_triangles} Triangle',
+                            gradient=(BLUE, GREEN))
+        else:
+            new_text = Text(
+                f'{self.total_triangles} Triangles', gradient=(BLUE, GREEN))
+
+        self.play(Transform(self.welcom, new_text))
+
+
     def remove_base_figure(self):
         remove_animation = []
         for dot in self.dots:
